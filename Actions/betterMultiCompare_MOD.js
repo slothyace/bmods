@@ -27,19 +27,19 @@ module.exports = {
         conditions:{
           data: {},
           name: "Condition",
-          preview: "",
+          preview: "`${option.data.conditionType} ${option.data.compValue}`",
           UI: [
             {
-              element: "typedDropdown",
+              element: "dropdown",
               storeAs: "conditionType",
               name: "Operand",
-              choices: {
-                moreThan: {name: "More Than", field: false},
-                lessThan: {name: "Less Than", field: false},
-                equalsTo: {name: "Equals To", field: false},
-                notEqualsTo: {name: "Not Equals To", field: false},
-                matchesRegex: {name: "Matches Regex", field: false}
-              },
+              choices: [
+                {name: "More Than", field: false},
+                {name: "Less Than", field: false},
+                {name: "Equals To", field: false},
+                {name: "Not Equals To", field: false},
+                {name: "Matches Regex", field: false}
+              ],
             },
             {
               element: "largeInput",
@@ -88,35 +88,35 @@ module.exports = {
     for (let cnd in values.matchConditions){
       let conditionData = values.matchConditions[cnd].data
       let compValue = bridge.transf(conditionData.compValue)
-      let conditionType = bridge.transf(conditionData.conditionType.type)
+      let conditionType = bridge.transf(conditionData.conditionType)
       let conditionMatch = false
 
       switch (conditionType){
-        case "moreThan":
+        case "More Than":
           if(oriValue > compValue){
             conditionMatch = true
           }
           break
 
-        case "lessThan":
+        case "Less Than":
           if(oriValue < compValue){
             conditionMatch = true
           }
           break
 
-        case "equalsTo":
+        case "Equals To":
           if(oriValue == compValue){
             conditionMatch = true
           }
           break
 
-        case "notEqualsTo":
+        case "Not Equals To":
           if(oriValue != compValue){
             conditionMatch = true
           }
           break
 
-        case "matchesRegex":
+        case "Matches Regex":
           if (conditionMatch = oriValue.match(new RegExp("^" + compValue + "$", "i"))){
             conditionMatch = true
           }
